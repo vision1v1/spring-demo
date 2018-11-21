@@ -1,0 +1,11 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: gateway-zuul-customer-route-locator
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
