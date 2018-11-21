@@ -27,6 +27,7 @@
 
     <modules>
         <module>microservice-user</module>
+        <module>microservice-user-with-eureka</module>
         <module>service-discovery-eureka</module>
     </modules>
 
