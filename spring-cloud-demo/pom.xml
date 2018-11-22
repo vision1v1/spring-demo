@@ -28,6 +28,7 @@
     <modules>
         <module>microservice-user</module>
         <module>microservice-user-with-eureka</module>
+        <module>microservice-user-provider</module>
         <module>service-discovery-eureka</module>
         <module>gateway-zuul</module>
         <module>gateway-zuul-customer-route-locator</module>
