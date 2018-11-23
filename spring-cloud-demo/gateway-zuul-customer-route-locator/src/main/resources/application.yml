@@ -7,5 +7,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
-
-
+logging:
+  level:
+    com.example.gatewayzuul: debug
+    org.springframework.cloud.netflix.zuul.filters: debug

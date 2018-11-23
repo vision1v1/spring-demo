@@ -13,3 +13,8 @@ zuul:
       path: /account/**
       serviceId: MICROSERVICE-USER-WITH-EUREKA
 
+logging:
+  level:
+    com.example.gatewayzuul: debug
+    org.springframework.cloud.netflix.zuul.filters: debug
+
