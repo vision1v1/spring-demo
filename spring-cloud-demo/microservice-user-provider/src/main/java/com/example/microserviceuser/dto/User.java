@@ -46,4 +46,9 @@ public class User {
     public boolean equals(Object obj) {
         return this.getUserId() == ((User)obj).getUserId();
     }
+
+    @Override
+    public int hashCode(){
+        return getUserId().hashCode();
+    }
 }
