@@ -1,0 +1,37 @@
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/vision1v1/spring-demo
+          repos:
+            dev:
+              pattern:
+                - '*/dev'
+                - '*/staging'
+              uri: https://github.com/vision1v1/spring-demo
+              search-paths: /dev
+            sit:
+              pattern:
+                - '*/sit'
+              uri: https://github.com/vision1v1/spring-demo
+              search-paths: /sit
+            uat:
+              pattern:
+                - '*/uat'
+              uri: https://github.com/vision1v1/spring-demo
+              search-paths: /uat
+server:
+  port: 7777
+
+
+
+
+#spring:
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          repos:
+#          search-paths:
