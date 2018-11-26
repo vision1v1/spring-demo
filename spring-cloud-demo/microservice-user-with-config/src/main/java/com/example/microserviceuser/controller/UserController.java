@@ -17,6 +17,15 @@ public class UserController {
     @Value("${first}")
     private String firstValue;
 
+    @Value("${second}")
+    private String secondValue;
+
+    @Value("${third}")
+    private String thirdValue;
+
+    @Value("${last}")
+    private String lastValue;
+
 
     @SuppressWarnings("Duplicates")
     @RequestMapping("/{userId}")
@@ -37,6 +46,21 @@ public class UserController {
     @RequestMapping("/first")
     public String getFirst(){
         return firstValue;
+    }
+
+    @RequestMapping("/second")
+    public String getSecond(){
+        return secondValue;
+    }
+
+    @RequestMapping("/third")
+    public String getThird(){
+        return thirdValue;
+    }
+
+    @RequestMapping("/last")
+    public String getLast(){
+        return lastValue;
     }
 
 
