@@ -30,6 +30,7 @@
         <module>microservice-user-with-eureka</module>
         <module>microservice-user-provider</module>
         <module>microservice-user-with-config</module>
+        <module>microservice-school</module>
         <module>service-discovery-eureka</module>
         <module>gateway-zuul</module>
         <module>gateway-zuul-customer-route-locator</module>
