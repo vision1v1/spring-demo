@@ -21,13 +21,8 @@ spring:
                 - '*/uat'
               uri: https://github.com/vision1v1/spring-demo
               search-paths: spring-cloud-demo/config-repo/uat
-
            # 从github上clone到本地的存放位置，但是在使用用户密码方式访问配置服务器时，重新拉取配置会出现异常
-#          basedir: c://config-repo-temp
-#        health:
-#          repositories:
-#            microservice-user:
-#              label: master
+          basedir: c://config-repo-temp
   security:
     user:
       password: test123
