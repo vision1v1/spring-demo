@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:7777
+  profiles:
+    active: dev,sit
+
+# 读取配置时，读最后一个active,如果没有在往上查找
+# 例如 上面的顺序是
+# microservice-user-sit.properties -> microservice-user-dev.properties -> microservice-user.properties -> application.properties

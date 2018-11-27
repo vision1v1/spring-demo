@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    config:
+    # uri: http://test:test123@localhost:7777 或则
+      uri: http://localhost:7777
+      label: master
+      username: test
+      password: test123
+  profiles:
+      active: dev,sit
