@@ -71,6 +71,7 @@ public class UserController {
     public ResponseEntity<List<User>> getUserList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         Integer from = Math.max((pageNum - 1) * pageSize, 0);
         Integer to = Math.min(pageNum * pageSize, users.size());
+        if(from > to) return ResponseEntity.noContent().build();
         users = users.subList(from, to);
         return ResponseEntity.ok(users);
     }
