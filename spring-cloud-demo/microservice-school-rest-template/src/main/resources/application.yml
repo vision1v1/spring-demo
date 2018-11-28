@@ -7,3 +7,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+# 如果定制化的客户端负载均衡，可以关闭ribbon。
+#ribbon:
+#  eureka:
+#    enabled: false

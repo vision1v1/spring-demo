@@ -33,6 +33,7 @@ public class SchoolController {
 
     @RequestMapping("/test")
     public ResponseEntity<String> test() {
+        //eurekaClient 集成了 Ribbon 默认负载策略，轮询调用该服务的所有实例
         InstanceInfo instance = eurekaClient.getNextServerFromEureka("MICROSERVICE-USER-PROVIDER", false);
         String result = instance.getHomePageUrl() + " " + instance.getIPAddr() + ":" + instance.getPort();
         return ResponseEntity.ok(result);
