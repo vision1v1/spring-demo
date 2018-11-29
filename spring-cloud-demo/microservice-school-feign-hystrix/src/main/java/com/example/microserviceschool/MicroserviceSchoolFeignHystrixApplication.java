@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableCircuitBreaker
 public class MicroserviceSchoolFeignHystrixApplication {
 
     @Bean

@@ -10,4 +10,7 @@ eureka:
 feign:
   hystrix:
     enabled: true
+logging:
+  level:
+    com.example.microserviceschool.feign: trace
 
