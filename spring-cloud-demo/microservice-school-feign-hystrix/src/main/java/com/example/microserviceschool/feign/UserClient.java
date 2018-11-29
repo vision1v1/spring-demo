@@ -1,13 +1,15 @@
 package com.example.microserviceschool.feign;
 
 import com.example.microserviceschool.sao.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(value = "microservice-user-provider")
+@FeignClient(value = "microservice-user-provider", fallback = UserClientFallback.class)
 public interface UserClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", consumes = "application/json")
