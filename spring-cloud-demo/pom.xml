@@ -32,6 +32,7 @@
         <module>microservice-user-with-config</module>
         <module>microservice-school</module>
         <module>microservice-school-rest-template</module>
+        <module>microservice-school-rest-template-hystrix</module>
         <module>microservice-school-feign</module>
         <module>microservice-school-feign-hystrix</module>
         <module>service-discovery-eureka</module>
