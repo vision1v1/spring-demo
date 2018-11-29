@@ -19,6 +19,9 @@ public interface UserClient {
     @PostMapping(value = "/user/", consumes = "application/json")
     ResponseEntity<User> createUser(@RequestBody User user);
 
-    @PutMapping(value = "/user/",consumes = "application/json")
+    @PutMapping(value = "/user/", consumes = "application/json")
     ResponseEntity<User> updateUser(@RequestBody User newUser);
+
+    @DeleteMapping(value = "/user/{userId}", consumes = "application/json")
+    ResponseEntity<User> deleteUser(@PathVariable("userId") Integer userId);
 }

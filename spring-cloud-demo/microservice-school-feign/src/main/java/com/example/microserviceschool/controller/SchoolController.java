@@ -31,20 +31,26 @@ public class SchoolController {
     }
 
     @PostMapping("/student")
-    public ResponseEntity<User> createStudent(@RequestBody User user){
+    public ResponseEntity<User> createStudent(@RequestBody User user) {
         ResponseEntity<User> responseEntity = userClient.createUser(user);
         User createdUser = responseEntity.getBody();
         return ResponseEntity.created(URI.create("/student/" + createdUser.getUserId())).body(createdUser);
     }
 
     @PutMapping("/student")
-    public ResponseEntity<User> updateStudent(@RequestBody User user){
+    public ResponseEntity<User> updateStudent(@RequestBody User user) {
         ResponseEntity<User> responseEntity = userClient.updateUser(user);
         //默认情况下 feign 调用其它的微服务接口返回404 认为是异常。
         //那么如何定义状态码符合restfull，需要自己扩展
         //wiki https://github.com/OpenFeign/feign/wiki/Custom-error-handling
         //我的提问 https://github.com/OpenFeign/feign/issues/848
-        if(responseEntity.getStatusCode() == HttpStatus.NOT_FOUND) return ResponseEntity.notFound().build();
+        if (responseEntity.getStatusCode() == HttpStatus.NOT_FOUND) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(responseEntity.getBody());
+    }
+
+    @DeleteMapping("/student/{studentId}")
+    public ResponseEntity<User> deleteStudent(@PathVariable("studentId") Integer studentId) {
+        ResponseEntity<User> responseEntity = userClient.deleteUser(studentId);
         return ResponseEntity.ok(responseEntity.getBody());
     }
 }
