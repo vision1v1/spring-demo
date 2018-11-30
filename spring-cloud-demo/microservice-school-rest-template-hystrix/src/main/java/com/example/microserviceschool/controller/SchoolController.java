@@ -1,9 +1,13 @@
 package com.example.microserviceschool.controller;
 
 import com.example.microserviceschool.sao.User;
+import com.example.microserviceschool.service.UserService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +23,16 @@ import java.util.List;
 @RequestMapping("/school")
 public class SchoolController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchoolController.class);
+
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
     private EurekaClient eurekaClient;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/students")
     public ResponseEntity<List<User>> getStudents() {
@@ -42,15 +51,13 @@ public class SchoolController {
         return ResponseEntity.ok(result);
     }
 
+
     @RequestMapping("/testhystrix")
-    @HystrixCommand(fallbackMethod = "testHystrixFallback")
-    public String testHystrix(){
-        throw new HttpServerErrorException(HttpStatus.SERVICE_UNAVAILABLE);
-        //return "hystrix";
+    public String testHystrix() {
+        LOGGER.trace("--------testHystrix Thread Id : {} --------", Thread.currentThread().getId());
+        return userService.testHystrix();
     }
 
-    private String testHystrixFallback(){
-        return "hi I'm testHystrix I Circuit Break";
-    }
+
 
 }
