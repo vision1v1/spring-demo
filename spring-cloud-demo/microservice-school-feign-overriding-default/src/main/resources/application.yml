@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: microservice-school-feign-overriding-default
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 9010
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
