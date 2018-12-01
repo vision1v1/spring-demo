@@ -33,6 +33,7 @@
         <module>microservice-school</module>
         <module>microservice-school-rest-template</module>
         <module>microservice-school-rest-template-ribbon</module>
+        <module>microservice-school-rest-template-ribbon-properties-customizing</module>
         <module>microservice-school-rest-template-hystrix</module>
         <module>microservice-school-feign</module>
         <module>microservice-school-feign-hystrix</module>
