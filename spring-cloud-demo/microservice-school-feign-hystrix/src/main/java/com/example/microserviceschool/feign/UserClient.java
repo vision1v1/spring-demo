@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@FeignClient(value = "microservice-user-provider", fallback = UserClientFallback.class)
-@FeignClient(value = "microservice-user-provider", fallbackFactory = UserClientFallbackFactory.class)
+@FeignClient(value = "microservice-user-provider", fallback = UserClientFallback.class)
+//@FeignClient(value = "microservice-user-provider", fallbackFactory = UserClientFallbackFactory.class)
 public interface UserClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", consumes = "application/json")
