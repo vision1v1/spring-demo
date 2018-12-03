@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: microservice-school-rest-template-ribbon-properties-customizing
+server:
+  port: 9010
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+ribbon:
+  eureka:
+    enabled: false # use ribbon without eureka
+
+# 不用eureka 需要指定 MICROSERVICE-USER-PROVIDER 微服务的信息
+MICROSERVICE-USER-PROVIDER:
+  ribbon:
+    listOfServers: http://localhost:9001,http://localhost:9002
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: microservice-school-rest-template-ribbon-properties-customizing
+server:
+  port: 9010
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+ribbon:
+  eager-load:
+    enabled: true # 启动时加载，而不是第一次请求时加载
+    clients: MICROSERVICE-USER-PROVIDER # Caching of Ribbon Configuration
+
+
+
+
+
+

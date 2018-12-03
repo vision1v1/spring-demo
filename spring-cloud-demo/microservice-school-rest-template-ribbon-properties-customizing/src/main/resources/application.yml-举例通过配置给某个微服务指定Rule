@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: microservice-school-rest-template-ribbon-properties-customizing
+server:
+  port: 9010
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+MICROSERVICE-USER-PROVIDER:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+
+
