@@ -27,6 +27,7 @@
     <modules>
         <module>account-web-mysql</module>
         <module>account-web-mysql-jdbc</module>
+        <module>account-web-mysql-jdbc-template</module>
         <module>account-web-mysql-mybatis</module>
     </modules>
 
