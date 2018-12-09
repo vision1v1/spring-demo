@@ -3,6 +3,9 @@ package com.example.accountwebmysql;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -17,7 +20,10 @@ public class AccountWebMysqlJdbcApplication {
 
     public static void main(String[] args) {
         //SpringApplication.run(AccountWebMysqlJdbcApplication.class, args);
+
+
         TestConnection();
+        //TestConnectionBySpringContext();
         TestSelect();
         TestAutoIncrement01();
         TestAutoIncrement02();
@@ -246,6 +252,16 @@ public class AccountWebMysqlJdbcApplication {
     }
 
 
+    //使用spring cloud的上下文容器创建数据连接对象，注意连接对象使用完的释放
+    private static void TestConnectionBySpringContext(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("dbcontext.xml");
+
+        DataSource ds = (DataSource) context.getBean("dataSource");
+
+        conn = DataSourceUtils.getConnection(ds);
+
+        //DataSourceUtils.releaseConnection(conn,ds);
+    }
 
     //ResultSetMetaData 描述结果的元数据
     private static void printResultSet(ResultSet rs) throws SQLException {
