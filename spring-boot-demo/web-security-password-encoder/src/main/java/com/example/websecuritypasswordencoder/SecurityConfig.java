@@ -1,5 +1,6 @@
 package com.example.websecuritypasswordencoder;
 
+import com.example.websecuritypasswordencoder.CustomizingPasswordEncoder.AspNetIdentityPasswordEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -27,18 +28,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //return new Pbkdf2PasswordEncoder();
 
-        //return new AspNetIdentityPasswordEncoder();
+        return new AspNetIdentityPasswordEncoder();
 
         //选择算法
-        String idForEncode = "pbkdf2";//"bcrypt";
-        Map encoders = new HashMap<>();
-        encoders.put("bcrypt", new BCryptPasswordEncoder());
-        encoders.put("noop", NoOpPasswordEncoder.getInstance());
-        encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
-        encoders.put("scrypt", new SCryptPasswordEncoder());
-        encoders.put("sha256", new StandardPasswordEncoder());
-        PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idForEncode, encoders);
-        return passwordEncoder;
+//        String idForEncode = "pbkdf2";//"bcrypt";
+//        Map encoders = new HashMap<>();
+//        encoders.put("bcrypt", new BCryptPasswordEncoder());
+//        encoders.put("noop", NoOpPasswordEncoder.getInstance());
+//        encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+//        encoders.put("scrypt", new SCryptPasswordEncoder());
+//        encoders.put("sha256", new StandardPasswordEncoder());
+//        PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idForEncode, encoders);
+//        return passwordEncoder;
     }
 
     @Override
