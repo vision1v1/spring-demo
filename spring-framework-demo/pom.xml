@@ -11,6 +11,7 @@
     <modules>
         <module>IoC-ApplicationContext-ClassPathXmlApplicationContext</module>
         <module>IoC-ApplicationContext-AnnotationConfigApplicationContext</module>
+        <module>IoC-Annotation-Config-Autowiring</module>
     </modules>
 
 
