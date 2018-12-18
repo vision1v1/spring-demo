@@ -26,6 +26,7 @@
 
     <modules>
         <module>web-boot-startup-customizing-failureanalyzer</module>
+        <module>web-autoconfigure</module>
         <module>web-security-password-encoder</module>
         <module>account-web-mysql</module>
         <module>account-web-mysql-jdbc</module>
