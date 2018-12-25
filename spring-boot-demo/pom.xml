@@ -28,6 +28,7 @@
         <module>web-boot-startup-customizing-failureanalyzer</module>
         <module>web-autoconfigure</module>
         <module>web-security-password-encoder</module>
+        <module>web-nosql-mongodb-spa</module>
         <module>account-web-mysql</module>
         <module>account-web-mysql-jdbc</module>
         <module>account-web-mysql-jdbc-template</module>
