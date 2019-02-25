@@ -18,4 +18,14 @@ public interface UsersRepository {
     })
     List<User> getAllUsers();
 
+    @Select("select * from Users where userName=#{userName123}")
+    @Results(value={
+            @Result(property = "userId",column = "UserId"),
+            @Result(property = "userName",column = "UserName"),
+            @Result(property = "password",column = "Password"),
+            @Result(property = "createdTime",column = "CreatedTime"),
+            @Result(property = "updatedTime",column = "UpdatedTime"),
+    })
+    User getUserByName(String userName123);
+
 }

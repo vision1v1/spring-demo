@@ -20,15 +20,43 @@ import java.util.List;
 //分析Mybatis核心对象，调试源码
 public class AccountMySqlMybatisByCodeDebugMain {
     public static void main(String[] args) {
-        //test01();
+
+        //test00();
+
+        test01();
 
         //test02();
 
         //test03();
 
-        test04();
+        //test04();
     }
 
+    //直接执行
+    @SuppressWarnings("Duplicates")
+    public static void test00() {
+
+        try {
+            String config = "mybatis-config.xml";
+            Reader reader = Resources.getResourceAsReader(config);
+
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            SqlSession session = sqlSessionFactory.openSession();
+
+            Configuration configuration = session.getConfiguration();
+            configuration.addMapper(UsersRepository.class);
+
+            List<User> users = session.selectList("accountmysqlmybatisbycodedebug.UsersRepository.getAllUsers");
+            users.forEach(user -> System.out.println(user));
+
+        } catch (IOException ie) {
+            ie.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //mapper的方式执行sql
     @SuppressWarnings("Duplicates")
     public static void test01() {
 
@@ -46,6 +74,10 @@ public class AccountMySqlMybatisByCodeDebugMain {
 
             List<User> users = usersRepository.getAllUsers();
             users.forEach(user -> System.out.println(user));
+
+            //查不到，返回null
+            User user = usersRepository.getUserByName("ssy");
+            System.out.println(user);
 
         } catch (IOException ie) {
             ie.printStackTrace();
