@@ -35,6 +35,7 @@
         <module>account-web-mysql-jdbc</module>
         <module>account-web-mysql-jdbc-template</module>
         <module>account-web-mysql-mybatis</module>
+        <module>account-mysql-mybatis-bycode-debug</module>
     </modules>
 
     <dependencies>
