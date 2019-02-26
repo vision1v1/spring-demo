@@ -23,13 +23,15 @@ public class AccountMySqlMybatisByCodeDebugMain {
 
         //test00();
 
-        test01();
+        //test01();
 
         //test02();
 
         //test03();
 
         //test04();
+
+        test05();
     }
 
     //直接执行
@@ -196,6 +198,53 @@ public class AccountMySqlMybatisByCodeDebugMain {
 
             users.forEach(user -> System.out.println(user));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //家里测试mybatis 通过硬编码的方式配置
+    @SuppressWarnings("Duplicates")
+    public static void test05(){
+        try {
+
+            //1.准备环境对象，为配置对象Configuration做准备。
+            TransactionFactory txFactory = new JdbcTransactionFactory();
+            DataSource dataSource = new PooledDataSource();
+            ((PooledDataSource) dataSource).setDriver("com.mysql.cj.jdbc.Driver");
+            //注意这里与配置文件中url的参数分割符的不同。
+            ((PooledDataSource) dataSource).setUrl("jdbc:mysql://192.168.209.131:3306/Account?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+            ((PooledDataSource) dataSource).setUsername("root");
+            ((PooledDataSource) dataSource).setPassword("Admin@123");
+            Environment environment = new Environment("dev123", txFactory, dataSource);
+
+            //2.生成Configuration对象，添加mapper对应的类。
+            Configuration configuration = new Configuration(environment);
+            configuration.addMapper(UsersRepository.class);
+            //添加sql的拦截器，用于显示执行的sql语句与执行时间。
+            configuration.addInterceptor(new SqlInterceptor());
+
+
+            SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(configuration);
+            SqlSession sqlSession = sqlSessionFactory.openSession();
+
+            //3.根据前面configuration中配置的mapper信息，创建动态代理类。
+            UsersRepository usersRepository = sqlSession.getMapper(UsersRepository.class);
+
+            //4.根据动态代理类。执行Executor中对应的方法。执行sql。
+            List<User> users = usersRepository.getAllUsers();
+
+            users.forEach(user -> System.out.println(user));
+
+            User user1 = usersRepository.getUserByName("ssy");
+
+            System.out.println(user1);
+
+            User user2 = sqlSession.selectOne("accountmysqlmybatisbycodedebug.UsersRepository.getUserByName","admin");
+
+            System.out.println(user2);
+
+            sqlSession.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
