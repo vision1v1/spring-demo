@@ -37,6 +37,7 @@
         <module>account-web-mysql-mybatis</module>
         <module>account-mysql-mybatis-bycode-debug</module>
         <module>account-mysql-jdbc-bonecp</module>
+        <module>account-mysql-jdbc-druid</module>
     </modules>
 
     <dependencies>
