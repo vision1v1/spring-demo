@@ -1,5 +1,6 @@
 package com.example.accountwebmysql;
 
+import com.mysql.cj.jdbc.NonRegisteringDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +11,12 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.*;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
 
 @SpringBootApplication
 public class AccountWebMysqlJdbcApplication {
@@ -21,19 +28,62 @@ public class AccountWebMysqlJdbcApplication {
     public static void main(String[] args) {
         //SpringApplication.run(AccountWebMysqlJdbcApplication.class, args);
 
+        TestDebugJdbc();
+        //TestConnection();
 
-        TestConnection();
         //TestConnectionBySpringContext();
-        TestSelect();
-        TestAutoIncrement01();
-        TestAutoIncrement02();
-        TestAutoIncrement03();
+        //TestAutoCommitAndInsert();
+        //TestSelect();
+
+        //TestAutoIncrement01();
+        //TestAutoIncrement02();
+        //TestAutoIncrement03();
+    }
+
+    private static void TestDebugJdbc(){
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try{
+
+            Driver driver = new NonRegisteringDriver();
+
+            String url = "jdbc:mysql://192.168.209.131:3306/Account?useSSL=false&user=root&password=Admin@123";
+            java.util.Properties info = new java.util.Properties();
+
+            connection = driver.connect(url,info);
+            statement = connection.createStatement();
+
+            if(statement.execute("select * from Users")){
+                resultSet = statement.getResultSet();
+                printResultSet(resultSet);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(resultSet != null) resultSet.close();
+                if(statement != null) statement.close();
+                if(connection != null) connection.close();
+            }
+            catch (Exception e){
+
+            }
+        }
     }
 
     //Connection 用于连接的对象
     private static void TestConnection() {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://192.168.209.131:3306/Account?useSSL=false&user=root&password=Admin@123");
+
+            printConnectionDefaultParameter(conn);
+
+            //设置是否自动提交，
+            //conn.setAutoCommit(false);
+
             LOGGER.info("连接成功");
             //conn.close();
         } catch (SQLException ex) {
@@ -78,6 +128,36 @@ public class AccountWebMysqlJdbcApplication {
                 }
                 stmt = null;
             }
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    private static void TestAutoCommitAndInsert(){
+        try{
+            conn.setAutoCommit(false);
+
+            Statement statement = conn.createStatement();
+
+            LocalDateTime dateTime = LocalDateTime.now();
+
+            //insert Users value(uuid(),'xyx','xyx@123',now(),now());
+
+            UUID uuid = UUID.randomUUID();
+
+            String name = "th000";
+            String email = "th000@123";
+
+            String sql = String.format("insert Users value('%s','%s','%s','%s','%s');",uuid,name,email,dateTime,dateTime);
+
+            int count = statement.executeUpdate(sql);
+
+            System.out.println("影响行数 " + count);
+
+            //手动提交
+            conn.commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -261,6 +341,48 @@ public class AccountWebMysqlJdbcApplication {
         conn = DataSourceUtils.getConnection(ds);
 
         //DataSourceUtils.releaseConnection(conn,ds);
+    }
+
+    private static void printConnectionDefaultParameter(Connection conn){
+        if(conn != null){
+            try{
+                DatabaseMetaData databaseMetaData = conn.getMetaData();
+
+                System.out.println("------------------catalogs------------------");
+                ResultSet catalogs = databaseMetaData.getCatalogs();
+                printResultSet(catalogs);
+                System.out.println("--------------------------------------------");
+
+                System.out.println("--------------clientInfoProperties----------");
+                ResultSet clientInfoProperties = databaseMetaData.getClientInfoProperties();
+                printResultSet(clientInfoProperties);
+                System.out.println("--------------------------------------------");
+
+                System.out.println("MaxConnections " + databaseMetaData.getMaxConnections());
+
+                System.out.println("auto commit " + conn.getAutoCommit());
+                System.out.println("catalog " + conn.getCatalog());
+
+
+                System.out.println("-----------client info---------------");
+                Properties properties = conn.getClientInfo();
+                properties.forEach((key,value)->{
+                    System.out.println(key + ":" + value);
+                });
+                System.out.println("-------------------------------------");
+
+                System.out.println("---------------typeMap---------------");
+                Map<String,Class<?>> typeMap = conn.getTypeMap();
+                typeMap.forEach((s,c)->{
+                    System.out.println(s + " " + c);
+                });
+                System.out.println("-------------------------------------");
+
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     //ResultSetMetaData 描述结果的元数据
