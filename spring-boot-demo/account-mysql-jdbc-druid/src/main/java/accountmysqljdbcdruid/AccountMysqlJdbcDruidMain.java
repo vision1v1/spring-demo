@@ -18,9 +18,11 @@ public class AccountMysqlJdbcDruidMain {
 
         try {
             Properties config = new Properties();
-            config.setProperty("url", "jdbc:mysql://192.168.154.130:3306/Account?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+            config.setProperty("url", "jdbc:mysql://192.168.209.131:3306/Account?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
             config.setProperty("username", "root");
             config.setProperty("password", "Admin@123");
+
+            //监控统计
             config.setProperty("filters", "stat");
 
             //最大连接数量
@@ -75,26 +77,14 @@ public class AccountMysqlJdbcDruidMain {
                 }
 
             } finally {
-                try {
-                    if (rset != null) {
-                        rset.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if (rset != null) {
+                    tryClose(rset::close);
                 }
-                try {
-                    if (stmt != null) {
-                        stmt.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if (stmt != null) {
+                    tryClose(stmt::close);
                 }
-                try {
-                    if (dpc != null) {
-                        dpc.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if (dpc != null) {
+                    tryClose(dpc::close);
                 }
             }
 
@@ -102,6 +92,19 @@ public class AccountMysqlJdbcDruidMain {
             e.printStackTrace();
         }
 
+    }
 
+    private static void tryClose(CloseFunction func) {
+        try {
+            func.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FunctionalInterface
+    interface CloseFunction {
+        void close() throws SQLException;
     }
 }
