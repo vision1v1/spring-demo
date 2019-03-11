@@ -10,10 +10,4 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @ComponentScan("springaopusage")
 public class AppConfig {
-
-    @Bean(name = "target")
-    public BusinessTarget businessTarget(){
-        return new BusinessTarget();
-    }
-
 }

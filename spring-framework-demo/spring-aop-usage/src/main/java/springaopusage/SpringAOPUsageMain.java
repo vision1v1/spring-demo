@@ -8,11 +8,11 @@ public class SpringAOPUsageMain {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        BusinessTarget targetBean = (BusinessTarget)context.getBean("target");
+        BusinessTarget targetBean = context.getBean(BusinessTarget.class);
 
         targetBean.transfer();
 
-        //targetBean.transfer("hehe");
+        targetBean.transfer("hehe");
 
     }
 }
