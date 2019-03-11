@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.context.ContextLoaderListener;
 
 @SpringBootApplication
 public class WebSpringBootStartupApplication {
@@ -23,6 +24,8 @@ public class WebSpringBootStartupApplication {
         SpringApplication app = new SpringApplication(resourceLoader, WebSpringBootStartupApplication.class);
         AnnotationConfigServletWebServerApplicationContext context = (AnnotationConfigServletWebServerApplicationContext) app.run(args);
         WebServer webServer = context.getWebServer();
+
+        //ContextLoaderListener
         //DefaultServlet
         //NioEndpoint
     }
