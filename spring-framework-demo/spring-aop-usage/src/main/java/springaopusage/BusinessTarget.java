@@ -9,8 +9,8 @@ public class BusinessTarget {
         System.out.println("BusinessTarget transfer");
     }
 
-    public void transfer(String name){
-        System.out.println("BusinessTarget transfer " + name);
-    }
+//    public void transfer(String name){
+//        System.out.println("BusinessTarget transfer " + name);
+//    }
 
 }
