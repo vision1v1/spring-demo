@@ -11,6 +11,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.ibatis.transaction.Transaction;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -31,7 +32,9 @@ public class AccountMySqlMybatisByCodeDebugMain {
 
         //test04();
 
-        test05();
+        //test05();
+
+        test06();
     }
 
     //直接执行
@@ -46,8 +49,12 @@ public class AccountMySqlMybatisByCodeDebugMain {
             SqlSession session = sqlSessionFactory.openSession();
 
             Configuration configuration = session.getConfiguration();
+
+            //1，可以直接在configuration中添加mapper。
+            //2，也可以@Mapper 利用@MapperScan扫描进去到configuration中。spring boot这么搞的
             configuration.addMapper(UsersRepository.class);
 
+            //ibatis的写法
             List<User> users = session.selectList("accountmysqlmybatisbycodedebug.UsersRepository.getAllUsers");
             users.forEach(user -> System.out.println(user));
 
@@ -70,10 +77,19 @@ public class AccountMySqlMybatisByCodeDebugMain {
             SqlSession session = sqlSessionFactory.openSession();
 
             Configuration configuration = session.getConfiguration();
+
+
+            //1.addMapper   -> 将被代理的类（即被标记为@Mapper的类）封装为MapperProxyFactory，
+            // 根据对应的type保存到Configuration中的MappRegistry中。（将来用于创建动态代理）。
+            // 然后解析（@Mapper）目标类中的标记例如@Select，将解析结果放到Configuration中的mappedStatements中，这里是将被标记的方法名，与sql语句map了一起。
+            // 为后续动态代理MapperProxy的InvocationHandler调用。
             configuration.addMapper(UsersRepository.class);
 
+            //2.getMapper   -> 中根据1中MapperProxyFactory，创建动态代理 MapperProxy。
             UsersRepository usersRepository = session.getMapper(UsersRepository.class);
 
+            //3.调用要代理的接口后，调用到代理，在代理中执行invoke调用，将mapperInterface与调用的接口方法封装成MapperMethod对象，
+            // 缓存这个对象 到MapperProxy中，然后执行mapperMethod方法 利用SqlSession执行sql语句。（ibatis的用法）
             List<User> users = usersRepository.getAllUsers();
             users.forEach(user -> System.out.println(user));
 
@@ -210,6 +226,10 @@ public class AccountMySqlMybatisByCodeDebugMain {
 
             //1.准备环境对象，为配置对象Configuration做准备。
             TransactionFactory txFactory = new JdbcTransactionFactory();
+            //TransactionFactory txFactory = new ManagedTransactionFactory();
+            //这个在 mybatis-spring 下
+            //TransactionFactory txFactory = new SpringManagedTransactionFactory();
+
             DataSource dataSource = new PooledDataSource();
             ((PooledDataSource) dataSource).setDriver("com.mysql.cj.jdbc.Driver");
             //注意这里与配置文件中url的参数分割符的不同。
@@ -248,5 +268,47 @@ public class AccountMySqlMybatisByCodeDebugMain {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    //测试mybatis中一级缓存 local session caching
+    @SuppressWarnings("Duplicates")
+    public static void test06() {
+
+        try {
+            String config = "mybatis-config.xml";
+            Reader reader = Resources.getResourceAsReader(config);
+
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            SqlSession session = sqlSessionFactory.openSession();
+
+            Configuration configuration = session.getConfiguration();
+            configuration.addMapper(UsersRepository.class);
+            UsersRepository usersRepository = session.getMapper(UsersRepository.class);
+
+//            User user = usersRepository.getUserByName("admin");
+//            System.out.println(user);
+//            System.out.println("--------默认开启了一级缓存-------");
+//            user = usersRepository.getUserByName("admin");
+//            System.out.println(user);
+            //DefaultSqlSession
+            User user1 = session.selectOne("getUserByName","admin");
+            System.out.println(user1);
+            System.out.println("--------默认开启了一级缓存-------");
+            //如果sql以及参数不变，一级缓存打开后，不会在查数据库，直接从本地缓存返回数据。
+            //这就有数据不一致的问题。
+            user1 = session.selectOne("getUserByName","admin");
+            System.out.println(user1);
+
+        } catch (IOException ie) {
+            ie.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //二级缓存，就是两个标记了@Mapper的类中执行的查询用了一个缓存。前提是相同的namespace。
+    public static void test07(){
+
     }
 }
