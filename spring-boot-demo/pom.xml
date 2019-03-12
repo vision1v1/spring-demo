@@ -39,7 +39,6 @@
         <module>account-mysql-jdbc-bonecp</module>
         <module>account-mysql-jdbc-druid</module>
         <module>spring-boot-application-context-aware</module>
-        <module>spring-boot-debug</module>
         <module>spring-boot-configuration</module>
     </modules>
 
