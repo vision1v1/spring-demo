@@ -48,4 +48,17 @@ public class User {
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[ ");
+        stringBuilder.append(userId + " ");
+        stringBuilder.append(userName + " ");
+        stringBuilder.append(password + " ");
+        stringBuilder.append(createdTime + " ");
+        stringBuilder.append(updatedTime + " ");
+        stringBuilder.append("]");
+        return  stringBuilder.toString();
+    }
 }

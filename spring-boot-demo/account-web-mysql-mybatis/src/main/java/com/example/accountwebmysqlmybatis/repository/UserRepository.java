@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Mapper
+//@Mapper
 public interface UserRepository {
 
     @Select("select * from Users where UserId = #{userId}")
