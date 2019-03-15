@@ -20,7 +20,7 @@ public class TestController {
         return ResponseEntity.ok(result);
     }
 
-    @RequestMapping(value = "hi", method = RequestMethod.GET)
+    @RequestMapping(value = "hi", method = RequestMethod.GET, consumes = "application/json")
     public String hi() {
         return "nihao";
     }
