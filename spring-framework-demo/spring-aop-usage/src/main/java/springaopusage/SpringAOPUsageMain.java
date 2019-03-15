@@ -12,7 +12,7 @@ public class SpringAOPUsageMain {
 
         targetBean.transfer();
 
-        targetBean.transfer("hehe");
+        //targetBean.transfer("hehe");
 
     }
 }

@@ -1,10 +1,8 @@
 package springaopusage;
 
 
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,8 +20,10 @@ public class MyAspect {
         System.out.println("inWebLayer");
     }
 
+
     //advice 通知
-    @Before("anyOldTransfer()")
+    //@Before("anyOldTransfer()") //切点与通知分开写法，
+    @Before("execution(* springaopusage.BusinessTarget.transfer(..))")// 切点与通知写在一起的写法
     public void beforeTransfer(){
         System.out.println("beforeTransfer");
     }
@@ -32,4 +32,10 @@ public class MyAspect {
     public void afterTransfer(){
         System.out.println("afterTransfer");
     }
+
+    //也可以将通知与连接点写在一起，
+//    @Around("execution(* springaopusage.BusinessTarget.transfer(..))")
+//    public void aroundTransfer(){
+//        System.out.println("aroundTransfer");
+//    }
 }
