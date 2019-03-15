@@ -10,7 +10,10 @@ public class SpringApplication {
         tomcat.setPort(6666);
         tomcat.getConnector();
 
-        tomcat.addContext("/", "C://test001");
+        //tomcat.addContext("/", "C://test001");
+
+        //必须指定tomcat为一个web应用，sci接口才能被回调。
+        tomcat.addWebapp("/","C://test001");
         try {
             tomcat.start();
         } catch (LifecycleException e) {

@@ -12,10 +12,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 在web环境下
+ * */
 @HandlesTypes(MiniWebApplicationInitializer.class)
 public class SpringMiniServletContainerInitializer implements ServletContainerInitializer {
     @Override
     public void onStartup(Set<Class<?>> miniWebApplicationInitializers, ServletContext ctx) throws ServletException {
+
+        System.out.println("--------SpringMiniServletContainerInitializer-----------");
+
         List<MiniWebApplicationInitializer> initializers = new LinkedList<>();
 
         if(miniWebApplicationInitializers != null){
