@@ -5,6 +5,8 @@ import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor;
 
 public class SpringApplication {
 
@@ -33,6 +35,8 @@ public class SpringApplication {
         wrapper.setLoadOnStartup(1);
         //http://localhost:6666/app/test/hi
         wrapper.addMapping("/app/*");
+
+        //AbstractMessageConverterMethodProcessor
 
 
         try {
