@@ -8,14 +8,16 @@ import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor;
 
 @SpringBootApplication
 public class WebSpringBootStartupApplication {
 
     public static void main(String[] args) {
-        //SpringApplication.run(WebSpringBootStartupApplication.class, args);
+        SpringApplication.run(WebSpringBootStartupApplication.class, args);
 
-        test01();
+        //test01();
     }
 
     public static void test01() {
@@ -24,6 +26,10 @@ public class WebSpringBootStartupApplication {
         SpringApplication app = new SpringApplication(resourceLoader, WebSpringBootStartupApplication.class);
         AnnotationConfigServletWebServerApplicationContext context = (AnnotationConfigServletWebServerApplicationContext) app.run(args);
         WebServer webServer = context.getWebServer();
+
+        //AbstractMessageConverterMethodProcessor
+
+        //DispatcherServlet
 
         //ContextLoaderListener
         //DefaultServlet
