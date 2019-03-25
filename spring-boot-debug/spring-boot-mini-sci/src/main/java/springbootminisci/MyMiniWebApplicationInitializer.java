@@ -1,5 +1,6 @@
 package springbootminisci;
 
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -15,6 +16,7 @@ public class MyMiniWebApplicationInitializer implements MiniWebApplicationInitia
         AnnotationConfigWebApplicationContext ac = new AnnotationConfigWebApplicationContext();
         ac.register(AppConfig.class);
         ac.refresh();
+        //ContextLoaderListener
 
         // Create and register the DispatcherServlet
         DispatcherServlet servlet = new DispatcherServlet(ac);

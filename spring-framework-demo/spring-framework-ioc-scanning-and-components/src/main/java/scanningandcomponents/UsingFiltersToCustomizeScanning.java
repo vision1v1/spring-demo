@@ -20,5 +20,11 @@ public class UsingFiltersToCustomizeScanning {
 
         Arrays.stream(beanNamesForSchool).forEach(System.out::println);
 
+        System.out.println("--------------------------------");
+
+        AppConfig proxyByCGLib = context.getBean(AppConfig.class);
+
+        System.out.println(proxyByCGLib.getClass());
+
     }
 }
