@@ -13,6 +13,7 @@
         <module>IoC-ApplicationContext-AnnotationConfigApplicationContext</module>
         <module>IoC-Annotation-Config-Autowiring</module>
         <module>spring-aop-usage</module>
+        <module>spring-framework-ioc-scanning-and-components</module>
     </modules>
 
 
