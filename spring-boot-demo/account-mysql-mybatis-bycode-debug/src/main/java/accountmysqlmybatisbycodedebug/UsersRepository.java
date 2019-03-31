@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 //缓存Namespace写法，也叫二级缓存
-@CacheNamespaceRef
+//@CacheNamespaceRef
 public interface UsersRepository {
 
     @Select("select * from Users")
@@ -30,5 +30,7 @@ public interface UsersRepository {
     //flushCache=Options.FlushCachePolicy.TRUE 可以关闭一级缓存。
     //@Options(flushCache=Options.FlushCachePolicy.TRUE)
     User getUserByName(String userName123);
+
+
 
 }

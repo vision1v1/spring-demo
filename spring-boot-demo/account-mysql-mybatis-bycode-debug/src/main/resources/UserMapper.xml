@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="accountmysqlmybatisbycodedebug">
+    <select id="selectUserByName"
+            resultType="accountmysqlmybatisbycodedebug.User"
+            flushCache="false"
+            useCache="false">
+        select * from Users where userName = #{userName123}
+    </select>
+
+    <insert id="insertUser" parameterType="accountmysqlmybatisbycodedebug.User">
+        insert into Users values(#{userId},#{userName},#{password},#{createdTime},#{updatedTime})
+    </insert>
+
+    <update id="updateUserPasswordByName" parameterType="hashmap">
+        update Users set Password = #{password} where UserName = #{userName}
+    </update>
+
+    <delete id="deleteUserByName" parameterType="String">
+        delete from Users where UserName = #{userName}
+    </delete>
+
+</mapper>

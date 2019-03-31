@@ -32,9 +32,9 @@ public class AccountMySqlMybatisByCodeDebugMain {
 
         //test04();
 
-        //test05();
+        test05();
 
-        test06();
+        //test06();
     }
 
     //直接执行
@@ -244,6 +244,9 @@ public class AccountMySqlMybatisByCodeDebugMain {
             //添加sql的拦截器，用于显示执行的sql语句与执行时间。
             configuration.addInterceptor(new SqlInterceptor());
 
+            //设置LocalCache，本地缓存（一级缓存）为语句级别，这样每次sql都是最新
+            //configuration.setLocalCacheScope(LocalCacheScope.STATEMENT);
+
 
             SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(configuration);
             SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -251,18 +254,39 @@ public class AccountMySqlMybatisByCodeDebugMain {
             //3.根据前面configuration中配置的mapper信息，创建动态代理类。
             UsersRepository usersRepository = sqlSession.getMapper(UsersRepository.class);
 
-            //4.根据动态代理类。执行Executor中对应的方法。执行sql。
-            List<User> users = usersRepository.getAllUsers();
+            System.out.println("*********************************");
 
-            users.forEach(user -> System.out.println(user));
+            //4.根据动态代理类。执行Executor中对应的方法。执行sql。
+            List<User> users1 = usersRepository.getAllUsers();
+
+            users1.forEach(user -> System.out.println(user));
+
+
+            System.out.println("---------------------------------");
 
             User user1 = usersRepository.getUserByName("ssy");
 
             System.out.println(user1);
 
-            User user2 = sqlSession.selectOne("accountmysqlmybatisbycodedebug.UsersRepository.getUserByName","admin");
+            System.out.println("---------------------------------");
+
+            User user2 = usersRepository.getUserByName("ssy");
 
             System.out.println(user2);
+
+            System.out.println("---------------------------------");
+
+            //缓存返回同一个对象，这个对象在缓存中，外部修改会有问题。
+            // Note that when the localCacheScope is set to SESSION,
+            // MyBatis returns references to the same objects which are stored in the local cache.
+            // Any modification of returned object (lists etc.) influences the local cache contents
+            // and subsequently the values which are returned from the cache in the lifetime of the session.
+            // Therefore, as best practice, do not to modify the objects returned by MyBatis.
+            System.out.println("user1 == user2 " + ( user1==user2 ) + " " + user1.equals(user2));
+
+//            User user2 = sqlSession.selectOne("accountmysqlmybatisbycodedebug.UsersRepository.getUserByName","admin");
+//
+//            System.out.println(user2);
 
             sqlSession.close();
         } catch (Exception e) {
@@ -275,6 +299,7 @@ public class AccountMySqlMybatisByCodeDebugMain {
     @SuppressWarnings("Duplicates")
     public static void test06() {
 
+        org.apache.ibatis.logging.LogFactory.useLog4J2Logging();
         try {
             String config = "mybatis-config.xml";
             Reader reader = Resources.getResourceAsReader(config);
@@ -297,8 +322,11 @@ public class AccountMySqlMybatisByCodeDebugMain {
             System.out.println("--------默认开启了一级缓存-------");
             //如果sql以及参数不变，一级缓存打开后，不会在查数据库，直接从本地缓存返回数据。
             //这就有数据不一致的问题。
-            user1 = session.selectOne("getUserByName","admin");
-            System.out.println(user1);
+            User user2 = session.selectOne("getUserByName","admin");
+            System.out.println(user2);
+
+            //缓存返回同一个对象，这个对象在缓存中，外部修改会有问题。
+            System.out.println("user1 == user2 " + ( user1==user2 ));
 
         } catch (IOException ie) {
             ie.printStackTrace();

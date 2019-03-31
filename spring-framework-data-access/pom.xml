@@ -7,6 +7,9 @@
     <groupId>com.example</groupId>
     <artifactId>spring-framework-data-access</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>spring-mybatis-usage</module>
+    </modules>
     <packaging>pom</packaging>
 
     <build>
